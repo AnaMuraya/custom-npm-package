@@ -253,7 +253,7 @@ Run the following command from the root folder.
   `npm pack`
 This will generate a .tgz file that we can use to install the package locally in other projects.
 
-**Alternatively**, you can link the package for testing purpose[Recommended].
+**Alternatively**, you can link the package for testing purpose**[Recommended]**.
 
 Using `npm link` in your package's root directory, create a global symlink of your package. A shortcut that directs your system to another directory or file is known as a "symlink," short for symbolic link.
 
