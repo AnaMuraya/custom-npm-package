@@ -1,8 +1,9 @@
 # demo-react-npm-module
 
-## How to create a custom NPM Module with React Components?
+## How to create a custom NPM Module with React Components
 
 This repo is aimed to describe the process of creating a custom NPM package/module with React.JS components.
+
 It will guide you through the steps of setting up your development environment, writing and exporting your components, and publishing your package to the NPM registry.
 
 ## Installation
