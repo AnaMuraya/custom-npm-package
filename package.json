@@ -1,0 +1,53 @@
+{
+  "name": "@a.muraya/custom-demo",
+  "version": "1.0.2",
+  "description": "This is a custom demo react application to be published to npm.",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnaMuraya/custom-demo.git"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "npm",
+    "package"
+  ],
+  "author": "A.M",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnaMuraya/custom-demo/issues"
+  },
+  "homepage": "https://github.com/AnaMuraya/custom-demo#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rollup": "^4.18.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@types/react": "^18.3.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  }
+}
