@@ -1,20 +1,16 @@
-# npm i --save-dev @types/a.muraya__custom-demo
+# demo-react-npm-module
 
-<https://github.com/ananduremanan/custom-react-npm-module/tree/main>
-<https://medium.com/@oliverlenton/how-to-create-a-react-npm-package-with-typescript-db9106dc9a23>
-<https://www.geeksforgeeks.org/how-to-build-and-publish-an-npm-package-for-react-using-typescript/>
-
-## How to create a Custom NPM Module with React Components?
+## How to create a custom NPM Module with React Components?
 
 This repo is aimed to describe the process of creating a custom NPM package/module with React.JS components.
-It will guide you through the steps of setting up your development environment, writing and exporting your components, and publishing your package to the NPM registry[Optional].
+It will guide you through the steps of setting up your development environment, writing and exporting your components, and publishing your package to the NPM registry.
 
 ## Installation
 
 ### Step 1: Make a directory and initialize npm
 
 ```bash
-  mkdir custom-npm-package
+  mkdir your-npm-package
   npm init
 ```
 
@@ -37,7 +33,9 @@ Add the necessary fields. After the successfull walkthrough a package.json will 
 }
 ```
 
-### Step 2: Create a src folder in the root add a index.js/index.ts in it also create a component folder and creates some components in it.
+### Step 2: Folder structure
+
+Create a src folder in the root add a index.js/index.ts in it also create a component folder and creates some components in it.
 
 ```bash
 src
@@ -51,29 +49,27 @@ src
 └── index.ts
 ```
 
-### Step 3: Now, Add react and react-dom as peer-dependencies and dev-dependencies.
+### Step 3: Dependencies
 
-```bash
-  yarn add react react-dom --dev
+Now, Add react and react-dom as peer-dependencies and dev-dependencies.
 
-  or
+`npm install react react-dom --dev`
 
-  npm install react react-dom --dev
-```
+`npm install --save-dev typescript`
 
 The final package.json may looks like below.
 
 ```bash
   {
-  "name": "custom-npm-package",
+  "name": "your-npm-package",
   "version": "1.0.0",
-  "description": "react custom npm module",
+  "description": "react npm module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx babel src --out-file index.js --extensions .ts,.tsx"
   },
-  "author": "Anandhu",
+  "author": "your name",
   "license": "ISC",
   "peerDependencies": {
     "react": "^18.2.0",
@@ -88,18 +84,114 @@ The final package.json may looks like below.
 }
 ```
 
-Since it is Typescript. I've also installed typescript, typescript react with it.
+Since it is Typescript. I've also installed typescript, typescript react with it. 
 
-### Step 4: Its time to bundle the code. Install rollup.js
+Installing as a dev dependency means it won’t be included in our final package, as it is not necessary once our code has built.
+
+**Note**: _There is an option to use rollup or typescript. We'll explore both._
+
+## Typescript
+
+### Configure the tsconfig.json file
+Setup the typescript compiler using `npx tsc --init`, which will create a tsconfig.json file which contains any typescript compilation options.
+
+Now replace the contents with below to ensure our typescript files are generated correctly for our package and in the right location.
+
+```bash
+{
+  "compilerOptions": {
+    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
+    "module": "esnext" /* Specify what module code is generated. */,
+    "outDir": "dist",
+    "target": "es5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "lib": ["es6", "dom", "es2016", "es2017"],
+    "sourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "strict": true /* Enable all strict type-checking options. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "src/**/*.stories.tsx",
+    "src/**/*.test.tsx"
+  ]
+}
+```
+
+### Package.json Setup
+
+Make sure to include our `dist` files in the package, and React is included as a peerDependency.
+
+We also need a build script to compile the code.
+
+The `package.json` file should look like the following:
+
+```bash
+{
+  "name": "your-package-name",
+  "version": "1.0.2",
+  "description": "This is a custom demo react application to be published to npm.",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "your-repo"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "npm",
+    "package"
+  ],
+  "author": "A.M",
+  "license": "ISC",
+  "bugs": {
+    "url": "your-repo/issues"
+  },
+  "homepage": "your-repo#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "typescript": "^5.5.3"
+  }
+}
+```
+
+## Rollup
+
+### Its time to bundle the code. Install rollup.js
 
   `npm install --save react rollup`
 You will also need to install the Rollup plugins for Babel, CommonJS, and Node Resolve by running
 
 `npm install --save-dev @rollup/plugin-babel @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-terser`
 
-### Step 5: Configure Rollup
+### Configure Rollup
 
-Create a rollup.config.mjs or rollup.config.js file in the root of your project. In this file, configure Rollup to bundle your React component by specifying the input file, output format, and plugins to use. Here is an example configuration:
+Create a `rollup.config.mjs` or `rollup.config.js` file in the root of your project. 
+
+In this file, configure Rollup to bundle your React component by specifying the input file, output format, and plugins to use. Here is an example configuration:
 
 ```bash
 import babel from 'rollup-plugin-babel';
@@ -151,65 +243,53 @@ now we can simply use npm run build or yarn build to bundle the code.
 
 If it compiled without any error you may see a new folder dist generated in the root folder with transpiled Javascript Code.
 
-App Screenshot
+**Note**: that if you're using a build tool like Webpack, you may not need to use npx babel at all. Instead, you can use a TypeScript loader like ts-loader or awesome-typescript-loader that will transpile and transform your TypeScript files as part of the build process.
 
-image: bundled output
+## Test the package in other projects. 
 
-Note: that if you're using a build tool like Webpack, you may not need to use npx babel at all. Instead, you can use a TypeScript loader like ts-loader or awesome-typescript-loader that will transpile and transform your TypeScript files as part of the build process.
-
-### Step 6: Lets pack it so we can use/test it in other projects. Run the following command from the root folder.
+Run the following command from the root folder.
 
   `npm pack`
 This will generate a .tgz file that we can use to install the package locally in other projects.
 
-Alternatively, you can link the package for testing purpose(Recommended).
+**Alternatively**, you can link the package for testing purpose[Recommended].
 
 Using `npm link` in your package's root directory, create a global symlink of your package. A shortcut that directs your system to another directory or file is known as a "symlink," short for symbolic link.
 
-Now, create an another application and tell the application to use the global symlink with npm link your-package-name. This way, we could save a lot of time.
+Now, create an another application and tell the application to use the global symlink with `npm link your-package-name`. This way, we could save a lot of time.
 
-### Step 7: Navigate to your other project's directory and install your package using npm install . For example:
+## Publish your package to NPM Registry
+
+When satisfied after testing,you could now publish a package to the npm registry, using these steps:
+
+1. Create an npm account on npmjs.com.
+2. Sign in to npm from your terminal using the `npm login` command.
+3. Prepare your package for publishing.
+4. Publish the package from the terminal using the `npm publish` command.
+
+### Navigate to your other project's directory and install your package using npm install . For example:
 
   `npm i 'path_to_the_packed_file'`
 
-### Step 8: In your host project's code you can import and use your component as follows:
+### In your host project's code you can import and use your component as follows:
 
 ```bash
-  import logo from "./logo.svg";
   import "./App.css";
-  import TextInput from "my_npm_package"; // Importing from the package
+  import TextInput from "my_npm_package"; **// Importing from the package**
   import { useState } from "react";
 
-  function App() {
+  export default function App() {
     const [value, setValue] = useState('');
-    console.log(value)
 
-    function handleChange(e) {
-      setValue(e.target.value);
-    }
+    const handleChange(e)= () => setValue(e.target.value);
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Custom npm module.</p>
+          <p>My npm module.</p>
           <TextInput label="Name" value={value} onChange={handleChange} />
-        </header>
       </div>
     );
   }
-
-  export default App;
 ```
 
 Additionally we can use packages like storybook.js to build UI components and pages in isolation and by doing so we could see the changes that happens to our components without the need of installing it in a host application. You could find the documention for implementing story book here.
-
-### Step 9: Publishing our package to NPM Registry
-
-To publish a package to the npm registry, we need to follow these steps:
-
-Create an npm account on npmjs.com.
-Sign in to npm from your terminal using the `npm login` command.
-Prepare your package for publishing.
-Publish the package from the terminal using the `npm publish` command.
-# custom-demo
