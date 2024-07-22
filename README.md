@@ -257,6 +257,8 @@ This will generate a .tgz file that we can use to install the package locally in
 
 Using `npm link` in your package's root directory, create a global symlink of your package. A shortcut that directs your system to another directory or file is known as a "symlink," short for symbolic link.
 
+**Note:** If npm link gives a `code: 'EACCES'` error, use `sudo npm link`. You might need to enter your password. The error should be solved
+
 Now, create an another application and tell the application to use the global symlink with `npm link your-package-name`. This way, we could save a lot of time.
 
 ## Publish your package to NPM Registry
