@@ -50,6 +50,24 @@ src
 └── index.ts
 ```
 
+Below is a sample component. **Note** that the component is exported as a **named** component and not as a default
+
+```bash
+import React from 'react'
+
+export function Component1() {
+  return <div>Component1</div>
+}
+```
+
+The index.ts will look like this;
+
+```bash
+export * from './components/component1'
+export * from './components/component2'
+```
+
+
 ### Step 3: Dependencies
 
 Now, Add react and react-dom as peer-dependencies and dev-dependencies.
@@ -162,7 +180,7 @@ The `package.json` file should look like the following:
     "npm",
     "package"
   ],
-  "author": "A.M",
+  "author": "your-name",
   "license": "ISC",
   "bugs": {
     "url": "your-repo/issues"
@@ -248,18 +266,39 @@ If it compiled without any error you may see a new folder dist generated in the 
 
 ## Test the package in other projects. 
 
+Make sure to build the package first using the `npm run build` command.
+
+**There's to ways to test the package;**
+
 Run the following command from the root folder.
 
   `npm pack`
 This will generate a .tgz file that we can use to install the package locally in other projects.
 
-**Alternatively**, you can link the package for testing purpose**[Recommended]**.
+**Alternatively**, you can link the package for testing purpose [**Recommended**].
 
 Using `npm link` in your package's root directory, create a global symlink of your package. A shortcut that directs your system to another directory or file is known as a "symlink," short for symbolic link.
 
 **Note:** If npm link gives a `code: 'EACCES'` error, use `sudo npm link`. You might need to enter your password. The error should be solved
 
-Now, create an another application and tell the application to use the global symlink with `npm link your-package-name`. This way, we could save a lot of time.
+Now, create an another application and tell the application to use the global symlink with `npm link your-package-name`. Import and use the package like below.
+
+```bash
+import { Component1, Component2, Component2 } from '_your-custom-package_'
+
+export default function Home() {
+  return (
+    <main>
+        <Component1 />
+        <Component2 />
+        <Component3 />
+    </main>
+  )
+}
+
+```
+
+This way, we could save a lot of time 🙂.
 
 ## Publish your package to NPM Registry
 
