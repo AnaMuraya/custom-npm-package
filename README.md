@@ -135,7 +135,7 @@ The `package.json` file should look like the following:
 ```bash
 {
   "name": "your-package-name",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "This is a custom demo react application to be published to npm.",
   "main": "dist/index.js",
   "files": [
@@ -181,7 +181,7 @@ The `package.json` file should look like the following:
 
 ## Rollup
 
-### Its time to bundle the code. Install rollup.js
+### Bundle the code. Install rollup.js
 
   `npm install --save react rollup`
 You will also need to install the Rollup plugins for Babel, CommonJS, and Node Resolve by running
