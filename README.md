@@ -12,6 +12,7 @@ It will guide you through the steps of setting up your development environment, 
 
 ```bash
   mkdir your-npm-package
+  cd your-npm-package
   npm init
 ```
 
