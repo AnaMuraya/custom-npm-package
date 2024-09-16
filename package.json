@@ -1,6 +1,6 @@
 {
   "name": "@a.muraya/custom-demo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This is a demo react typescript npm module.",
   "main": "dist/index.js",
   "files": [
